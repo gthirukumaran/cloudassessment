@@ -1,0 +1,59 @@
+# FastAPI and ASGI
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# Database
+sqlalchemy==2.0.23
+alembic==1.12.1
+psycopg2-binary==2.9.9
+asyncpg==0.29.0
+
+# Authentication and Security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-dotenv==1.0.0
+azure-identity==1.15.0
+azure-mgmt-resource==23.0.1
+azure-mgmt-compute==30.3.0
+azure-mgmt-network==29.0.0
+azure-mgmt-storage==21.0.0
+azure-mgmt-keyvault==10.2.0
+
+# Redis and Caching
+redis==5.0.1
+celery==5.3.4
+
+# AI and ML
+openai==1.6.1
+langchain==0.0.340
+langchain-openai==0.0.2
+
+# PDF Generation
+reportlab==4.0.7
+weasyprint==60.2
+
+# HTTP Client
+httpx==0.25.2
+aiohttp==3.9.1
+
+# Data Processing
+pandas==2.1.4
+numpy==1.25.2
+pydantic[email]==2.5.0
+pydantic-settings==2.1.0
+
+# Monitoring and Logging
+structlog==23.2.0
+prometheus-client==0.19.0
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+httpx==0.25.2
+
+# Development
+black==23.11.0
+isort==5.12.0
+flake8==6.1.0
+mypy==1.7.1
