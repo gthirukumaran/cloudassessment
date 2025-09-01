@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinOps Dashboard</title>
+    <link rel="stylesheet" href="finops_theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--background);
+            color: var(--foreground);
+        }
+        .sidebar {
+            background-color: var(--sidebar);
+            color: var(--sidebar-foreground);
+        }
+        .card {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+        }
+        .nav-item {
+            color: var(--sidebar-muted);
+            transition: all 0.2s ease;
+        }
+        .nav-item:hover, .nav-item.active {
+            color: var(--sidebar-foreground);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .cloud-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .cloud-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        .metric-value {
+            font-family: var(--font-mono);
+        }
+    </style>
+</head>
+<body class="h-screen flex">
+    <!-- Sidebar -->
+    <aside class="sidebar w-64 h-screen flex flex-col fixed left-0">
+        <div class="p-6">
+            <h1 class="text-xl font-bold mb-8">FinOps Dashboard</h1>
+            <nav class="space-y-2">
+                <a href="#" class="nav-item active flex items-center space-x-3 p-3 rounded-lg">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 p-3 rounded-lg">
+                    <i data-lucide="chart-bar"></i>
+                    <span>Cost Analysis</span>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 p-3 rounded-lg">
+                    <i data-lucide="database"></i>
+                    <span>Resources</span>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 p-3 rounded-lg">
+                    <i data-lucide="bell"></i>
+                    <span>Alerts</span>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 p-3 rounded-lg">
+                    <i data-lucide="settings"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="ml-64 flex-1 p-8">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-bold">Cloud Cost Overview</h2>
+            <div class="flex items-center space-x-4">
+                <button class="px-4 py-2 rounded-lg bg-primary text-white flex items-center space-x-2">
+                    <i data-lucide="download"></i>
+                    <span>Export Report</span>
+                </button>
+                <div class="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
+                    <i data-lucide="user"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Cloud Provider Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- AWS Card -->
+            <div class="card cloud-card p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold">AWS</h3>
+                    <span class="text-success">↑ 2.4%</span>
+                </div>
+                <p class="metric-value text-2xl font-bold">$12,450.00</p>
+                <div class="mt-4 text-sm text-muted-foreground">
+                    vs. $12,160 last month
+                </div>
+            </div>
+
+            <!-- Azure Card -->
+            <div class="card cloud-card p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold">Azure</h3>
+                    <span class="text-destructive">↓ 1.2%</span>
+                </div>
+                <p class="metric-value text-2xl font-bold">$8,320.00</p>
+                <div class="mt-4 text-sm text-muted-foreground">
+                    vs. $8,420 last month
+                </div>
+            </div>
+
+            <!-- GCP Card -->
+            <div class="card cloud-card p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold">Google Cloud</h3>
+                    <span class="text-success">↑ 3.1%</span>
+                </div>
+                <p class="metric-value text-2xl font-bold">$5,670.00</p>
+                <div class="mt-4 text-sm text-muted-foreground">
+                    vs. $5,500 last month
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <!-- Cost Trend -->
+            <div class="card p-6">
+                <h3 class="font-semibold mb-4">Cost Trend</h3>
+                <canvas id="costTrendChart" height="200"></canvas>
+            </div>
+
+            <!-- Resource Distribution -->
+            <div class="card p-6">
+                <h3 class="font-semibold mb-4">Resource Distribution</h3>
+                <canvas id="resourceChart" height="200"></canvas>
+            </div>
+        </div>
+
+        <!-- Top Services Table -->
+        <div class="card p-6">
+            <h3 class="font-semibold mb-4">Top Services by Cost</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b border-border">
+                            <th class="text-left py-3 px-4">Service</th>
+                            <th class="text-left py-3 px-4">Provider</th>
+                            <th class="text-left py-3 px-4">Cost</th>
+                            <th class="text-left py-3 px-4">Change</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-border">
+                            <td class="py-3 px-4">EC2 Instances</td>
+                            <td class="py-3 px-4">AWS</td>
+                            <td class="py-3 px-4 metric-value">$4,320.00</td>
+                            <td class="py-3 px-4 text-success">+2.1%</td>
+                        </tr>
+                        <tr class="border-b border-border">
+                            <td class="py-3 px-4">Azure VMs</td>
+                            <td class="py-3 px-4">Azure</td>
+                            <td class="py-3 px-4 metric-value">$3,150.00</td>
+                            <td class="py-3 px-4 text-destructive">-1.5%</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4">Cloud Storage</td>
+                            <td class="py-3 px-4">GCP</td>
+                            <td class="py-3 px-4 metric-value">$2,840.00</td>
+                            <td class="py-3 px-4 text-success">+3.2%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Sample data for charts
+        const costTrendChart = new Chart(
+            document.getElementById('costTrendChart'),
+            {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [
+                        {
+                            label: 'AWS',
+                            data: [10200, 11400, 11800, 12100, 12160, 12450],
+                            borderColor: 'rgb(255, 99, 132)',
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Azure',
+                            data: [7200, 7600, 8100, 8300, 8420, 8320],
+                            borderColor: 'rgb(54, 162, 235)',
+                            tension: 0.1
+                        },
+                        {
+                            label: 'GCP',
+                            data: [4800, 5100, 5300, 5400, 5500, 5670],
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            }
+        );
+
+        const resourceChart = new Chart(
+            document.getElementById('resourceChart'),
+            {
+                type: 'doughnut',
+                data: {
+                    labels: ['Compute', 'Storage', 'Network', 'Other'],
+                    datasets: [{
+                        data: [45, 25, 20, 10],
+                        backgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(75, 192, 192)',
+                            'rgb(255, 205, 86)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            }
+        );
+    </script>
+</body>
+</html>

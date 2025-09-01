@@ -1,0 +1,292 @@
+﻿{
+    "scan_id":  "scan-c973359e",
+    "subscription_id":  "0a519345-d9f4-400c-a3b4-e8379de6638e",
+    "framework":  "CIS",
+    "status":  "completed",
+    "start_time":  "2025-08-13T16:58:04.110030",
+    "end_time":  "2025-08-13T16:59:04.121765",
+    "progress":  100,
+    "total_checks":  120,
+    "passed_checks":  96,
+    "failed_checks":  24,
+    "compliance_score":  85,
+    "config":  {
+                   "resource_groups":  [
+
+                                       ],
+                   "exclude_resources":  [
+
+                                         ],
+                   "severity_filter":  "all",
+                   "notify_email":  "",
+                   "selected_controls":  [
+
+                                         ]
+               },
+    "findings":  [
+                     {
+                         "id":  "cis-001",
+                         "title":  "Multi-factor authentication not enabled for privileged users",
+                         "description":  "Global administrators and subscription owners should have MFA enabled",
+                         "severity":  "critical",
+                         "category":  "Identity and Access Management",
+                         "recommendation":  "Enable MFA for all privileged accounts in Azure AD",
+                         "status":  "failed",
+                         "resource_id":  "admin-accounts",
+                         "resource_name":  "Administrator Accounts"
+                     },
+                     {
+                         "id":  "cis-002",
+                         "title":  "Storage account public access not restricted",
+                         "description":  "Storage accounts allow public blob access which poses security risks",
+                         "severity":  "high",
+                         "category":  "Data Protection",
+                         "recommendation":  "Disable public blob access on storage accounts",
+                         "status":  "failed",
+                         "resource_id":  "storage-001",
+                         "resource_name":  "Production Storage"
+                     },
+                     {
+                         "id":  "cis-003",
+                         "title":  "Key Vault access policies too permissive",
+                         "description":  "Key Vault has overly broad access policies assigned",
+                         "severity":  "high",
+                         "category":  "Key Management",
+                         "recommendation":  "Review and restrict Key Vault access policies",
+                         "status":  "failed",
+                         "resource_id":  "kv-prod",
+                         "resource_name":  "Production Key Vault"
+                     },
+                     {
+                         "id":  "cis-004",
+                         "title":  "SQL Database auditing not enabled",
+                         "description":  "SQL Database auditing is not configured for compliance monitoring",
+                         "severity":  "high",
+                         "category":  "Database Security",
+                         "recommendation":  "Enable SQL Database auditing and log analytics",
+                         "status":  "failed",
+                         "resource_id":  "sql-prod",
+                         "resource_name":  "Production SQL Database"
+                     },
+                     {
+                         "id":  "cis-005",
+                         "title":  "Network security groups allow unrestricted access",
+                         "description":  "NSG rules allow traffic from any source (0.0.0.0/0)",
+                         "severity":  "high",
+                         "category":  "Network Security",
+                         "recommendation":  "Restrict NSG rules to specific IP ranges",
+                         "status":  "failed",
+                         "resource_id":  "nsg-web",
+                         "resource_name":  "Web Tier NSG"
+                     },
+                     {
+                         "id":  "cis-006",
+                         "title":  "Virtual machines lack endpoint protection",
+                         "description":  "VMs do not have antimalware or endpoint protection installed",
+                         "severity":  "high",
+                         "category":  "Compute Security",
+                         "recommendation":  "Install and configure endpoint protection on all VMs",
+                         "status":  "failed",
+                         "resource_id":  "vm-web-01",
+                         "resource_name":  "Web Server VM"
+                     },
+                     {
+                         "id":  "cis-007",
+                         "title":  "Security Center standard tier not enabled",
+                         "description":  "Azure Security Center is not configured with standard tier",
+                         "severity":  "medium",
+                         "category":  "Security Monitoring",
+                         "recommendation":  "Enable Security Center standard tier for enhanced protection",
+                         "status":  "failed",
+                         "resource_id":  "security-center",
+                         "resource_name":  "Security Center"
+                     },
+                     {
+                         "id":  "cis-008",
+                         "title":  "Log Analytics workspace not configured",
+                         "description":  "Centralized logging is not properly configured",
+                         "severity":  "medium",
+                         "category":  "Logging and Monitoring",
+                         "recommendation":  "Configure Log Analytics workspace for centralized logging",
+                         "status":  "failed",
+                         "resource_id":  "log-analytics",
+                         "resource_name":  "Log Analytics Workspace"
+                     },
+                     {
+                         "id":  "cis-009",
+                         "title":  "Application Gateway WAF not enabled",
+                         "description":  "Web Application Firewall is not enabled on Application Gateway",
+                         "severity":  "medium",
+                         "category":  "Web Security",
+                         "recommendation":  "Enable WAF on Application Gateway with OWASP rules",
+                         "status":  "failed",
+                         "resource_id":  "appgw-prod",
+                         "resource_name":  "Production App Gateway"
+                     },
+                     {
+                         "id":  "cis-010",
+                         "title":  "Backup not configured for critical resources",
+                         "description":  "Azure Backup is not configured for VMs and databases",
+                         "severity":  "medium",
+                         "category":  "Data Protection",
+                         "recommendation":  "Configure Azure Backup for all critical resources",
+                         "status":  "failed",
+                         "resource_id":  "backup-vault",
+                         "resource_name":  "Recovery Services Vault"
+                     },
+                     {
+                         "id":  "cis-011",
+                         "title":  "Resource locks not applied",
+                         "description":  "Critical resources lack resource locks to prevent accidental deletion",
+                         "severity":  "medium",
+                         "category":  "Resource Management",
+                         "recommendation":  "Apply resource locks to critical infrastructure",
+                         "status":  "failed",
+                         "resource_id":  "rg-production",
+                         "resource_name":  "Production Resource Group"
+                     },
+                     {
+                         "id":  "cis-012",
+                         "title":  "Disk encryption not enabled",
+                         "description":  "VM disks are not encrypted with Azure Disk Encryption",
+                         "severity":  "medium",
+                         "category":  "Data Protection",
+                         "recommendation":  "Enable Azure Disk Encryption for all VM disks",
+                         "status":  "failed",
+                         "resource_id":  "vm-disk-01",
+                         "resource_name":  "VM OS Disk"
+                     },
+                     {
+                         "id":  "cis-013",
+                         "title":  "Network Watcher not enabled",
+                         "description":  "Network monitoring and diagnostics are not properly configured",
+                         "severity":  "medium",
+                         "category":  "Network Monitoring",
+                         "recommendation":  "Enable Network Watcher for network monitoring",
+                         "status":  "failed",
+                         "resource_id":  "network-watcher",
+                         "resource_name":  "Network Watcher"
+                     },
+                     {
+                         "id":  "cis-014",
+                         "title":  "Azure AD Privileged Identity Management not configured",
+                         "description":  "PIM is not configured for privileged role management",
+                         "severity":  "medium",
+                         "category":  "Identity and Access Management",
+                         "recommendation":  "Configure Azure AD PIM for privileged access management",
+                         "status":  "failed",
+                         "resource_id":  "aad-pim",
+                         "resource_name":  "Azure AD PIM"
+                     },
+                     {
+                         "id":  "cis-015",
+                         "title":  "Activity log retention not configured",
+                         "description":  "Activity logs are not retained for the required compliance period",
+                         "severity":  "medium",
+                         "category":  "Logging and Monitoring",
+                         "recommendation":  "Configure activity log retention for 90+ days",
+                         "status":  "failed",
+                         "resource_id":  "activity-log",
+                         "resource_name":  "Activity Log"
+                     },
+                     {
+                         "id":  "cis-016",
+                         "title":  "Azure Policy not implemented",
+                         "description":  "Governance policies are not enforced through Azure Policy",
+                         "severity":  "medium",
+                         "category":  "Governance",
+                         "recommendation":  "Implement Azure Policy for governance and compliance",
+                         "status":  "failed",
+                         "resource_id":  "azure-policy",
+                         "resource_name":  "Azure Policy"
+                     },
+                     {
+                         "id":  "cis-017",
+                         "title":  "Resource tags not standardized",
+                         "description":  "Resources lack consistent tagging for cost management and governance",
+                         "severity":  "low",
+                         "category":  "Resource Management",
+                         "recommendation":  "Implement standardized resource tagging strategy",
+                         "status":  "failed",
+                         "resource_id":  "all-resources",
+                         "resource_name":  "All Resources"
+                     },
+                     {
+                         "id":  "cis-018",
+                         "title":  "Cost management alerts not configured",
+                         "description":  "Budget alerts and cost management are not properly configured",
+                         "severity":  "low",
+                         "category":  "Cost Management",
+                         "recommendation":  "Configure budget alerts and cost management policies",
+                         "status":  "failed",
+                         "resource_id":  "cost-management",
+                         "resource_name":  "Cost Management"
+                     },
+                     {
+                         "id":  "cis-019",
+                         "title":  "Service Health alerts not configured",
+                         "description":  "Service health notifications are not configured for critical services",
+                         "severity":  "low",
+                         "category":  "Service Monitoring",
+                         "recommendation":  "Configure Service Health alerts for proactive monitoring",
+                         "status":  "failed",
+                         "resource_id":  "service-health",
+                         "resource_name":  "Service Health"
+                     },
+                     {
+                         "id":  "cis-020",
+                         "title":  "Azure Advisor recommendations not reviewed",
+                         "description":  "Azure Advisor recommendations have not been reviewed or implemented",
+                         "severity":  "low",
+                         "category":  "Optimization",
+                         "recommendation":  "Regularly review and implement Azure Advisor recommendations",
+                         "status":  "failed",
+                         "resource_id":  "azure-advisor",
+                         "resource_name":  "Azure Advisor"
+                     },
+                     {
+                         "id":  "cis-021",
+                         "title":  "Resource naming conventions not followed",
+                         "description":  "Resources do not follow organizational naming conventions",
+                         "severity":  "low",
+                         "category":  "Governance",
+                         "recommendation":  "Implement and enforce resource naming conventions",
+                         "status":  "failed",
+                         "resource_id":  "naming-convention",
+                         "resource_name":  "Resource Naming"
+                     },
+                     {
+                         "id":  "cis-022",
+                         "title":  "Update management not configured",
+                         "description":  "Automated update management is not configured for VMs",
+                         "severity":  "low",
+                         "category":  "Update Management",
+                         "recommendation":  "Configure Azure Update Management for automated patching",
+                         "status":  "failed",
+                         "resource_id":  "update-management",
+                         "resource_name":  "Update Management"
+                     },
+                     {
+                         "id":  "cis-023",
+                         "title":  "Azure Security Benchmark not applied",
+                         "description":  "Azure Security Benchmark policies are not applied to the subscription",
+                         "severity":  "low",
+                         "category":  "Security Baseline",
+                         "recommendation":  "Apply Azure Security Benchmark initiative",
+                         "status":  "failed",
+                         "resource_id":  "security-benchmark",
+                         "resource_name":  "Security Benchmark"
+                     },
+                     {
+                         "id":  "cis-024",
+                         "title":  "Diagnostic settings not configured",
+                         "description":  "Diagnostic settings are not configured for all Azure services",
+                         "severity":  "low",
+                         "category":  "Logging and Monitoring",
+                         "recommendation":  "Configure diagnostic settings for all Azure services",
+                         "status":  "failed",
+                         "resource_id":  "diagnostic-settings",
+                         "resource_name":  "Diagnostic Settings"
+                     }
+                 ]
+}

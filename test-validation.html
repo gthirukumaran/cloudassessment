@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation Feature Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        .button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
+        .button:hover { background: #0056b3; }
+        .result { background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0; }
+        .error { background: #f8d7da; color: #721c24; }
+        .success { background: #d4edda; color: #155724; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Validation Feature Test</h1>
+        
+        <div class="section">
+            <h2>Test File Analysis</h2>
+            <p>This will analyze the sample CSV files and detect their columns:</p>
+            <button class="button" onclick="testAnalyze()">Analyze Sample Files</button>
+            <div id="analyzeResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="section">
+            <h2>Test File Comparison</h2>
+            <p>This will compare the sample files using column mapping:</p>
+            <button class="button" onclick="testCompare()">Compare Sample Files</button>
+            <div id="compareResult" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        async function testAnalyze() {
+            const resultDiv = document.getElementById('analyzeResult');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = 'Analyzing files...';
+            
+            try {
+                const response = await fetch('http://127.0.0.1:9099/api/v1/validation/analyze', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        source_file: 'sample_source.csv',
+                        reference_file: 'sample_reference.csv'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `
+                        <h3>✅ Analysis Successful!</h3>
+                        <p><strong>Source Columns:</strong> ${data.source_columns.join(', ')}</p>
+                        <p><strong>Reference Columns:</strong> ${data.reference_columns.join(', ')}</p>
+                    `;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `<h3>❌ Analysis Failed</h3><p>${data.error || 'Unknown error'}</p>`;
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `<h3>❌ Network Error</h3><p>${error.message}</p>`;
+            }
+        }
+        
+        async function testCompare() {
+            const resultDiv = document.getElementById('compareResult');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = 'Comparing files...';
+            
+            // Sample column mapping
+            const columnMapping = {
+                resourceName: { source: 'Resource_Name', reference: 'ResourceName' },
+                resourceGroup: { source: 'Resource_Group', reference: 'ResourceGroup' },
+                subscriptionId: { source: 'Subscription_ID', reference: 'SubscriptionId' },
+                subscriptionName: { source: 'Subscription_Name', reference: 'SubscriptionName' },
+                ownerName: { source: 'Owner', reference: 'OwnerName' },
+                tags: { source: 'Tags', reference: 'ResourceTags' }
+            };
+            
+            try {
+                const response = await fetch('http://127.0.0.1:9099/api/v1/validation/compare', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        source_file: 'sample_source.csv',
+                        reference_file: 'sample_reference.csv',
+                        column_mapping: columnMapping
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const report = data.report;
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `
+                        <h3>✅ Comparison Successful!</h3>
+                        <p><strong>Total Resources:</strong> ${report.total_resources}</p>
+                        <p><strong>New:</strong> ${report.new_resources} | <strong>Updated:</strong> ${report.updated_resources} | <strong>Unchanged:</strong> ${report.unchanged_resources} | <strong>Removed:</strong> ${report.removed_resources}</p>
+                        <p><strong>Generated:</strong> ${new Date(report.generated_at).toLocaleString()}</p>
+                        <details>
+                            <summary>View Detailed Results (${report.comparisons.length} items)</summary>
+                            <pre>${JSON.stringify(report.comparisons.slice(0, 3), null, 2)}</pre>
+                            ${report.comparisons.length > 3 ? '<p>... and more</p>' : ''}
+                        </details>
+                    `;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `<h3>❌ Comparison Failed</h3><p>${data.error || 'Unknown error'}</p>`;
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `<h3>❌ Network Error</h3><p>${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

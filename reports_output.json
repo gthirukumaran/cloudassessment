@@ -1,0 +1,130 @@
+﻿{
+    "reports":  [
+                    {
+                        "id":  "report-soc2-857594",
+                        "report_id":  "report-soc2-857594",
+                        "name":  "SOC2 Compliance Report - Security Scan",
+                        "type":  "SOC2",
+                        "framework":  "SOC2",
+                        "status":  "generated",
+                        "environment":  "production",
+                        "created_at":  "2025-08-13T22:08:21.128627",
+                        "generated_at":  "2025-08-13T22:08:21.128627",
+                        "scan_id":  "scan-5f0ce94d",
+                        "compliance_score":  80,
+                        "executive_summary":  "Good security posture with 80% SOC2 compliance. ",
+                        "recommendations":  [
+                                                "Continue regular security assessments",
+                                                "Maintain current security controls"
+                                            ],
+                        "findings_summary":  {
+                                                 "total_findings":  1,
+                                                 "critical":  0,
+                                                 "high":  0,
+                                                 "medium":  0,
+                                                 "low":  1
+                                             },
+                        "scan_details":  {
+                                             "total_checks":  95,
+                                             "passed_checks":  76,
+                                             "failed_checks":  19,
+                                             "scan_duration":  "N/A",
+                                             "target_resources":  [
+
+                                                                  ]
+                                         }
+                    },
+                    {
+                        "id":  "report-cis-972304",
+                        "report_id":  "report-cis-972304",
+                        "name":  "CIS Compliance Report - Security Scan",
+                        "type":  "CIS",
+                        "framework":  "CIS",
+                        "status":  "generated",
+                        "environment":  "production",
+                        "created_at":  "2025-08-13T22:26:51.151137",
+                        "generated_at":  "2025-08-13T22:26:51.151137",
+                        "scan_id":  "scan-fdf01994",
+                        "compliance_score":  80,
+                        "executive_summary":  "Good security posture with 80% CIS compliance. 1 critical findings require immediate attention. 5 high-priority issues identified.",
+                        "recommendations":  [
+                                                "Enable MFA for all privileged accounts in Azure AD",
+                                                "Disable public blob access on storage accounts",
+                                                "Review and restrict Key Vault access policies",
+                                                "Enable SQL Database auditing and log analytics",
+                                                "Restrict NSG rules to specific IP ranges",
+                                                "Install and configure endpoint protection on all VMs",
+                                                "Enable Security Center standard tier for enhanced protection",
+                                                "Configure Log Analytics workspace for centralized logging",
+                                                "Enable WAF on Application Gateway with OWASP rules",
+                                                "Configure Azure Backup for all critical resources"
+                                            ],
+                        "findings_summary":  {
+                                                 "total_findings":  24,
+                                                 "critical":  1,
+                                                 "high":  5,
+                                                 "medium":  10,
+                                                 "low":  8
+                                             },
+                        "scan_details":  {
+                                             "total_checks":  120,
+                                             "passed_checks":  96,
+                                             "failed_checks":  24,
+                                             "scan_duration":  "N/A",
+                                             "target_resources":  [
+
+                                                                  ]
+                                         }
+                    },
+                    {
+                        "id":  "report-cis-d56e34",
+                        "report_id":  "report-cis-d56e34",
+                        "name":  "CIS Compliance Report - Security Scan",
+                        "type":  "CIS",
+                        "framework":  "CIS",
+                        "status":  "generated",
+                        "environment":  "production",
+                        "created_at":  "2025-08-13T22:29:35.147339",
+                        "generated_at":  "2025-08-13T22:29:35.147339",
+                        "scan_id":  "scan-c973359e",
+                        "compliance_score":  80,
+                        "executive_summary":  "Good security posture with 80% CIS compliance. 1 critical findings require immediate attention. 5 high-priority issues identified.",
+                        "recommendations":  [
+                                                "Enable MFA for all privileged accounts in Azure AD",
+                                                "Disable public blob access on storage accounts",
+                                                "Review and restrict Key Vault access policies",
+                                                "Enable SQL Database auditing and log analytics",
+                                                "Restrict NSG rules to specific IP ranges",
+                                                "Install and configure endpoint protection on all VMs",
+                                                "Enable Security Center standard tier for enhanced protection",
+                                                "Configure Log Analytics workspace for centralized logging",
+                                                "Enable WAF on Application Gateway with OWASP rules",
+                                                "Configure Azure Backup for all critical resources"
+                                            ],
+                        "findings_summary":  {
+                                                 "total_findings":  24,
+                                                 "critical":  1,
+                                                 "high":  5,
+                                                 "medium":  10,
+                                                 "low":  8
+                                             },
+                        "scan_details":  {
+                                             "total_checks":  120,
+                                             "passed_checks":  96,
+                                             "failed_checks":  24,
+                                             "scan_duration":  "N/A",
+                                             "target_resources":  [
+
+                                                                  ]
+                                         }
+                    }
+                ],
+    "total":  3,
+    "available_types":  [
+                            "CIS",
+                            "SOC2",
+                            "NIST",
+                            "ISO27001"
+                        ],
+    "generated_from_scans":  0
+}

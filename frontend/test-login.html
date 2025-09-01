@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Login</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; }
+        .form-group { margin: 10px 0; }
+        input { padding: 8px; margin: 5px; width: 200px; }
+        button { padding: 10px 20px; background: #2196f3; color: white; border: none; cursor: pointer; }
+        .result { margin: 20px 0; padding: 10px; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <h2>Test Login for Dashboard</h2>
+    <div class="form-group">
+        <input type="email" id="email" placeholder="Email" value="admin@securitya.com">
+    </div>
+    <div class="form-group">
+        <input type="password" id="password" placeholder="Password" value="admin123">
+    </div>
+    <div class="form-group">
+        <button onclick="testLogin()">Test Login</button>
+        <button onclick="openDashboard()">Open Dashboard</button>
+    </div>
+    <div id="result" class="result"></div>
+
+    <script>
+        async function testLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const resultDiv = document.getElementById('result');
+            
+            try {
+                const response = await fetch('http://127.0.0.1:9099/api/v1/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem('securra_token', data.access_token);
+                    localStorage.setItem('securra_user', JSON.stringify(data.user));
+                    resultDiv.innerHTML = '<div style="color: green;">✅ Login successful! Token stored. You can now access the dashboard.</div>';
+                } else {
+                    const error = await response.text();
+                    resultDiv.innerHTML = '<div style="color: red;">❌ Login failed: ' + error + '</div>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = '<div style="color: red;">❌ Network error: ' + error.message + '</div>';
+            }
+        }
+        
+        function openDashboard() {
+            window.open('http://localhost:3017/dashboard', '_blank');
+        }
+        
+        // Check current auth status
+        window.onload = function() {
+            const token = localStorage.getItem('securra_token');
+            const user = localStorage.getItem('securra_user');
+            if (token && user) {
+                document.getElementById('result').innerHTML = '<div style="color: blue;">ℹ️ Already logged in. You can access the dashboard.</div>';
+            }
+        }
+    </script>
+</body>
+</html>

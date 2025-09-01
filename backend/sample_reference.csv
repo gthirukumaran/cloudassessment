@@ -1,0 +1,6 @@
+ResourceName,ResourceGroup,SubscriptionId,SubscriptionName,OwnerName,ResourceTags,Region,ResourceType
+web-vm-01,prod-rg,12345678-1234-1234-1234-123456789012,Production,john.doe@company.com,"Environment=Production,Team=WebDev",East US,Microsoft.Compute/virtualMachines
+db-server-01,prod-rg,12345678-1234-1234-1234-123456789012,Production,jane.smith@company.com,"Environment=Production,Team=Database",East US,Microsoft.Sql/servers
+storage-account-01,storage-rg,12345678-1234-1234-1234-123456789012,Production,bob.wilson@company.com,"Environment=Production,Team=Storage",West US,Microsoft.Storage/storageAccounts
+api-gateway-01,api-rg,12345678-1234-1234-1234-123456789012,Production,charlie.davis@company.com,"Environment=Production,Team=API",East US,Microsoft.ApiManagement/service
+new-vm-03,dev-rg,87654321-4321-4321-4321-210987654321,Development,david.lee@company.com,"Environment=Development,Team=NewProject",West US,Microsoft.Compute/virtualMachines

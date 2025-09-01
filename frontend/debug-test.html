@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Debug Test</title>
+</head>
+<body>
+    <h1>API Debug Test</h1>
+    <button onclick="testSubscriptions()">Test Subscriptions API</button>
+    <button onclick="testScans()">Test Scans API</button>
+    <div id="results"></div>
+
+    <script>
+        async function testSubscriptions() {
+            try {
+                console.log('Testing subscriptions API...');
+                const response = await fetch('http://127.0.0.1:9099/api/v1/subscriptions');
+                const data = await response.json();
+                console.log('Subscriptions response:', data);
+                document.getElementById('results').innerHTML = '<h3>Subscriptions:</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            } catch (error) {
+                console.error('Subscriptions error:', error);
+                document.getElementById('results').innerHTML = '<h3>Error:</h3><pre>' + error.message + '</pre>';
+            }
+        }
+
+        async function testScans() {
+            try {
+                console.log('Testing scans API...');
+                const response = await fetch('http://127.0.0.1:9099/api/v1/scans');
+                const data = await response.json();
+                console.log('Scans response:', data);
+                document.getElementById('results').innerHTML = '<h3>Scans:</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            } catch (error) {
+                console.error('Scans error:', error);
+                document.getElementById('results').innerHTML = '<h3>Error:</h3><pre>' + error.message + '</pre>';
+            }
+        }
+
+        // Test on page load
+        window.onload = function() {
+            console.log('Debug page loaded');
+            testSubscriptions();
+        };
+    </script>
+</body>
+</html>

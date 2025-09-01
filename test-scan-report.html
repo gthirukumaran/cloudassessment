@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Security Scan Report - CIS</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .header { background-color: #f5f5f5; padding: 20px; border-radius: 5px; }
+        .section { margin: 20px 0; }
+        .finding { background-color: #fff3cd; padding: 10px; margin: 10px 0; border-left: 4px solid #ffc107; }
+        .critical { border-left-color: #dc3545; background-color: #f8d7da; }
+        .high { border-left-color: #fd7e14; background-color: #fff3cd; }
+        .medium { border-left-color: #ffc107; background-color: #fff3cd; }
+        .low { border-left-color: #28a745; background-color: #d4edda; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Security Scan Report</h1>
+        <p><strong>Scan ID:</strong> scan-952a142a</p>
+        <p><strong>Framework:</strong> CIS</p>
+        <p><strong>Subscription ID:</strong> your-subscription-id</p>
+        <p><strong>Status:</strong> completed</p>
+        <p><strong>Started:</strong> 2025-08-13T14:37:55.830736</p>
+        <p><strong>Completed:</strong> 2025-08-13T14:38:56.398706</p>
+    </div>
+    
+    <div class="section">
+        <h2>Summary</h2>
+        <p><strong>Total Checks:</strong> 120</p>
+        <p><strong>Passed:</strong> 96</p>
+        <p><strong>Failed:</strong> 24</p>
+        <p><strong>Compliance Score:</strong> 85%</p>
+    </div>
+    
+    <div class="section">
+        <h2>Findings</h2>
+        <div class="finding critical">
+            <h3>Multi-factor authentication not enabled for privileged users</h3>
+            <p><strong>Severity:</strong> critical</p>
+            <p><strong>Description:</strong> Global administrators and subscription owners should have MFA enabled</p>
+            <p><strong>Resource:</strong> Administrator Accounts</p>
+            <p><strong>Recommendation:</strong> Enable MFA for all privileged accounts in Azure AD</p>
+        </div>
+        <div class="finding low">
+            <h3>Storage account encryption enabled</h3>
+            <p><strong>Severity:</strong> low</p>
+            <p><strong>Description:</strong> Storage account encryption is properly configured</p>
+            <p><strong>Resource:</strong> Storage Account</p>
+            <p><strong>Recommendation:</strong> No action required - encryption is enabled</p>
+        </div>
+        <div class="finding medium">
+            <h3>Network Security Groups configured</h3>
+            <p><strong>Severity:</strong> medium</p>
+            <p><strong>Description:</strong> All subnets have NSGs applied with proper rules</p>
+            <p><strong>Resource:</strong> Web NSG</p>
+            <p><strong>Recommendation:</strong> Review NSG rules and restrict unnecessary access</p>
+        </div>
+    </div>
+</body>
+</html>

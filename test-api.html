@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+</head>
+<body>
+    <h1>API Test</h1>
+    <div id="results"></div>
+    
+    <script>
+        async function testAPI() {
+            const resultsDiv = document.getElementById('results');
+            
+            try {
+                // Test subscriptions endpoint
+                const subResponse = await fetch('http://127.0.0.1:9099/api/v1/subscriptions');
+                const subData = await subResponse.json();
+                
+                // Test analytics endpoint
+                const analyticsResponse = await fetch('http://127.0.0.1:9099/api/v1/dashboard/analytics');
+                const analyticsData = await analyticsResponse.json();
+                
+                resultsDiv.innerHTML = `
+                    <h2>Subscriptions API Test:</h2>
+                    <pre>${JSON.stringify(subData, null, 2)}</pre>
+                    
+                    <h2>Analytics API Test:</h2>
+                    <pre>${JSON.stringify(analyticsData, null, 2)}</pre>
+                `;
+            } catch (error) {
+                resultsDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+        
+        // Run test when page loads
+        window.onload = testAPI;
+    </script>
+</body>
+</html>

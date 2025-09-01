@@ -1,0 +1,149 @@
+# SecurityA Docker Compose Configuration
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    container_name: securitya_postgres
+    environment:
+      POSTGRES_DB: securitya_db
+      POSTGRES_USER: securitya_user
+      POSTGRES_PASSWORD: securitya_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    ports:
+      - "5439:5432"
+    networks:
+      - securitya_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U securitya_user -d securitya_db"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis Cache
+  redis:
+    image: redis:7
+    container_name: securitya_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - securitya_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # FastAPI Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: securitya_backend
+    env_file:
+      - ./backend/.env
+    environment:
+      - DATABASE_URL=postgresql://securitya_user:securitya_password@postgres:5432/securitya_db
+      - REDIS_URL=redis://redis:6379
+      - DEBUG=true
+      - HOST=0.0.0.0
+      - PORT=8000
+      - SECRET_KEY=dev-secret-key-change-in-production
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - securitya_network
+    volumes:
+      - ./backend:/app
+      - /app/__pycache__
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: securitya_frontend
+    env_file:
+      - ./backend/.env
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000/api/v1
+      - REACT_APP_AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
+      - REACT_APP_AZURE_TENANT_ID=${AZURE_TENANT_ID}
+      - REACT_APP_AZURE_REDIRECT_URI=${AZURE_REDIRECT_URI}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - securitya_network
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+  # Celery Worker (for background tasks)
+  celery_worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: securitya_celery_worker
+    command: celery -A app.celery_app worker --loglevel=info
+    env_file:
+      - ./backend/.env
+    environment:
+      - DATABASE_URL=postgresql://securitya_user:securitya_password@postgres:5432/securitya_db
+      - REDIS_URL=redis://redis:6379
+      - SECRET_KEY=dev-secret-key-change-in-production
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - securitya_network
+    volumes:
+      - ./backend:/app
+
+  # Celery Beat (for scheduled tasks)
+  celery_beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: securitya_celery_beat
+    command: celery -A app.celery_app beat --loglevel=info
+    env_file:
+      - ./backend/.env
+    environment:
+      - DATABASE_URL=postgresql://securitya_user:securitya_password@postgres:5432/securitya_db
+      - REDIS_URL=redis://redis:6379
+      - SECRET_KEY=dev-secret-key-change-in-production
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - securitya_network
+    volumes:
+      - ./backend:/app
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  securitya_network:
+    driver: bridge

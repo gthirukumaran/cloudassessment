@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Securra Security Compliance Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        .header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 20px; }
+        .section { margin: 20px 0; }
+        .score { font-size: 24px; color: #2e7d32; font-weight: bold; }
+        .recommendations { background: #f5f5f5; padding: 15px; border-radius: 5px; }
+        .metrics { display: flex; justify-content: space-around; background: #e3f2fd; padding: 15px; border-radius: 5px; }
+        .metric { text-align: center; }
+        .metric-value { font-size: 20px; font-weight: bold; color: #1976d2; }
+        .finding { margin: 10px 0; padding: 10px; border-radius: 4px; }
+        pre { white-space: pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Securra Security Compliance Report</h1>
+        <h2>CIS Compliance Report - Security Scan</h2>
+        <p>Report ID: report-cis-ca6d21</p>
+        <p>Generated: 2025-08-13 15:45:16</p>
+    </div>
+    
+    <div class="section">
+        <h3>Report Details</h3>
+        <p><strong>Type:</strong> CIS</p>
+        <p><strong>Environment:</strong> production</p>
+        <p><strong>Status:</strong> generated</p>
+        <p><strong>Created:</strong> 2025-08-13T21:15:00.674334</p>
+        <p><strong>Scan ID:</strong> scan-91729232</p>
+    </div>
+    
+    <div class="section">
+        <h3>Compliance Score</h3>
+        <div class="score">80%</div>
+    </div>
+    
+    
+    <div class="section">
+        <h3>Scan Metrics</h3>
+        <div class="metrics">
+            <div class="metric">
+                <div class="metric-value">120</div>
+                <div>Total Checks</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">96</div>
+                <div>Passed</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">24</div>
+                <div>Failed</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">1</div>
+                <div>Critical</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">0</div>
+                <div>High</div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="section">
+        <h3>Executive Summary</h3>
+        <p>Good security posture with 80% CIS compliance. 1 critical findings require immediate attention. </p>
+    </div>
+    
+    <div class="section">
+        <h3>Recommendations</h3>
+        <div class="recommendations">
+            <ul>
+                <li>Enable Multi-Factor Authentication for all accounts</li><li>Enable encryption for storage accounts and databases</li><li>Review and restrict network security group rules</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class='section'><h3>Security Findings</h3>
+                <div class="finding" style="border-left: 4px solid #d32f2f; padding: 10px; margin: 10px 0; background: #f9f9f9;">
+                    <h4 style="color: #d32f2f; margin: 0;">Multi-factor authentication not enabled for privileged users</h4>
+                    <p><strong>Severity:</strong> <span style="color: #d32f2f; text-transform: uppercase;">critical</span></p>
+                    <p><strong>Resource:</strong> N/A</p>
+                    <p><strong>Description:</strong> Global administrators and subscription owners should have MFA enabled</p>
+                    <p><strong>Remediation:</strong> No remediation steps available</p>
+                    
+                </div>
+                
+                <div class="finding" style="border-left: 4px solid #388e3c; padding: 10px; margin: 10px 0; background: #f9f9f9;">
+                    <h4 style="color: #388e3c; margin: 0;">Storage account encryption enabled</h4>
+                    <p><strong>Severity:</strong> <span style="color: #388e3c; text-transform: uppercase;">low</span></p>
+                    <p><strong>Resource:</strong> N/A</p>
+                    <p><strong>Description:</strong> Storage account encryption is properly configured</p>
+                    <p><strong>Remediation:</strong> No remediation steps available</p>
+                    
+                </div>
+                
+                <div class="finding" style="border-left: 4px solid #fbc02d; padding: 10px; margin: 10px 0; background: #f9f9f9;">
+                    <h4 style="color: #fbc02d; margin: 0;">Network Security Groups configured</h4>
+                    <p><strong>Severity:</strong> <span style="color: #fbc02d; text-transform: uppercase;">medium</span></p>
+                    <p><strong>Resource:</strong> N/A</p>
+                    <p><strong>Description:</strong> All subnets have NSGs applied with proper rules</p>
+                    <p><strong>Remediation:</strong> No remediation steps available</p>
+                    
+                </div>
+                </div>
+</body>
+</html>
+        
